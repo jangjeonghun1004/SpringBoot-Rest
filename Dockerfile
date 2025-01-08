@@ -1,4 +1,4 @@
-FROM amazoncorretto:11-alpine-jdk
+FROM openjdk:21-jdk-slim
 ARG JAR_FILE=target/*.jar
 ARG PROFILES
 ARG ENV
