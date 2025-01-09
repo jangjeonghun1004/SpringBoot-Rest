@@ -35,7 +35,4 @@ public class HealthCheckController {
         return ResponseEntity.ok(this.env);
     }
 
-    public void test() {
-
-    }
 }
