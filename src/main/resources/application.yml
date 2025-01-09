@@ -51,7 +51,7 @@ spring:
     name: demo
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/spring
+    url: jdbc:mysql://43.201.218.59:3306/spring
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -64,5 +64,3 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
-
-
