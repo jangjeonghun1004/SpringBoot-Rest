@@ -87,7 +87,7 @@ jobs:
           script: |
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/live_server:latest
             sudo docker run -d \
-            --name ${CONTAINER_NAME} \
+            --name "$CONTAINER_NAME" \
             -p 8080:8080 \
             -e PROFILES=blue \
             -e ENV=blue \
