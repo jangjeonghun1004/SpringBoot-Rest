@@ -90,16 +90,31 @@ jobs:
           script_stop: true
           script: |
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/live_server:latest
-            sudo docker ps -a --filter "name=blue" --format "{{.ID}}" | xargs -r sudo docker rm -f || true
-            sudo docker run -d \
-            --name blue \
-            -p 8080:8080 \
-            -e PROFILES=blue \
-            -e ENV=blue \
-            -e DB_URL=${{ secrets.DB_URL }} \
-            -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
-            -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-            ${{ secrets.DOCKERHUB_USERNAME }}/live_server:latest
+            
+            RUNNING=$(sudo docker ps --filter "name=/${CONTAINER_NAME}" --format "{{.Names}}")
+            if [ "$RUNNING" == "blue" ]; then
+              sudo docker run -d \
+              --name green \
+              -p 8080:8081 \
+              -e PROFILES=green \
+              -e ENV=green \
+              -e DB_URL=${{ secrets.DB_URL }} \
+              -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
+              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              ${{ secrets.DOCKERHUB_USERNAME }}/live_server:latest
+              sudo docker ps -a --filter "name=blue" --format "{{.ID}}" | xargs -r sudo docker rm -f || true
+            else
+              sudo docker run -d \
+              --name blue \
+              -p 8080:8080 \
+              -e PROFILES=blue \
+              -e ENV=blue \
+              -e DB_URL=${{ secrets.DB_URL }} \
+              -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
+              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              ${{ secrets.DOCKERHUB_USERNAME }}/live_server:latest
+              sudo docker ps -a --filter "name=green" --format "{{.ID}}" | xargs -r sudo docker rm -f || true
+            fi
 
           #sudo docker-compose -f docker-compose-${{env.TARGET_UPSTREAM}}.yml up -d
       
