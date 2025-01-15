@@ -83,7 +83,7 @@ jobs:
             if [ "$RUNNING" == "blue" ]; then
               sudo docker run -d \
               --name green \
-              -p 8080:8081 \
+              -p 8081:8081 \
               -e PROFILES=green \
               -e ENV=green \
               -e DB_URL=${{ secrets.DB_URL }} \
