@@ -75,8 +75,8 @@ jobs:
           script_stop: true
           script: |
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/live_server:latest
-            docker run -d \
-            --name blue-container \
+            sudo docker run -d \
+            --name blue \
             -p 8080:8080 \
             -e PROFILES=blue \
             -e ENV=blue \
