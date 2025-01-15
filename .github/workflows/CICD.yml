@@ -64,10 +64,15 @@ jobs:
             echo "TARGET_UPSTREAM=blue" >> $GITHUB_ENV
           fi
 
+
       - name: Fix Docker permissions
         run: |
           sudo chmod 666 /var/run/docker.sock
-          
+
+      - name: Add runner to Docker group
+        run: |
+          sudo usermod -aG docker $USER newgrp docker
+
       - name: Pull and Run Docker Container
         uses: appleboy/ssh-action@master
         with:
