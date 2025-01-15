@@ -63,8 +63,12 @@ jobs:
             echo "STOPPED_PORT=8080" >> $GITHUB_ENV
             echo "TARGET_UPSTREAM=blue" >> $GITHUB_ENV
           fi
+
+      - name: Fix Docker permissions
+        run: |
+          sudo chmod 666 /var/run/docker.sock
           
-      - name: Docker compose
+      - name: Pull and Run Docker Container
         uses: appleboy/ssh-action@master
         with:
           username: ubuntu
