@@ -37,7 +37,7 @@ jobs:
 
       - name: Add runner to Docker group
         run: |
-          sudo usermod -aG docker $USER newgrp docker
+          sudo usermod -aG docker $(whoami)
 
       - name: Build Docker
         run: docker build --platform linux/amd64 -t ${{ secrets.DOCKERHUB_USERNAME }}/live_server .
