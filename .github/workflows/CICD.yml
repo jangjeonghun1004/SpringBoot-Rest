@@ -129,12 +129,5 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script_stop: true
           script: |
-            if [ "$CURRENT_ENV" == "blue" ]; then
-              sudo docker stop red || true
-              sudo docker rm red || true
-            else
-              sudo docker stop blue || true
-              sudo docker rm blue || true
-            fi
           #sudo docker stop ${{env.CURRENT_UPSTREAM}} || true
           #sudo docker rm ${{env.CURRENT_UPSTREAM}} || true
