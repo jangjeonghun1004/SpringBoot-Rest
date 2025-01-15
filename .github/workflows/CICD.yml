@@ -47,7 +47,7 @@ jobs:
     steps:
       - name: Set target IP
         run: |
-          STATUS=$(curl -o /dev/null -w "%{http_code}" "https://newallsoft.shop")
+          STATUS=201
           echo $STATUS
           if [ $STATUS = 200 ]; then
             CURRENT_UPSTREAM=$(curl -s "http://${{ secrets.LIVE_SERVER_IP }}/env")
@@ -123,5 +123,12 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script_stop: true
           script: |
-            sudo docker stop ${{env.CURRENT_UPSTREAM}} || true
-            sudo docker rm ${{env.CURRENT_UPSTREAM}} || true
+            if [ "$CURRENT_ENV" == "blue" ]; then
+              sudo docker stop red || true
+              sudo docker rm red || true
+            else
+              sudo docker stop blue || true
+              sudo docker rm blue || true
+            fi
+          #sudo docker stop ${{env.CURRENT_UPSTREAM}} || true
+          #sudo docker rm ${{env.CURRENT_UPSTREAM}} || true
