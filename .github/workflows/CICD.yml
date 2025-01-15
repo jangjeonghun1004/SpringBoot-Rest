@@ -66,19 +66,7 @@ jobs:
           fi
       
 
-      - name: Check if container is running
-        id: check_container
-        run: |
-          CONTAINER_NAME="blue"
-          CONTAINER_PORT="8080:8080"
-          RUNNING=$(sudo docker ps --filter "name=/${CONTAINER_NAME}" --format "{{.Names}}")
-          if [ "$RUNNING" == "$CONTAINER_NAME" ]; then
-            echo "CONTAINER_NAME=red" >> $GITHUB_ENV
-            echo "CONTAINER_PORT=8081:8081" >> $GITHUB_ENV
-          else
-            echo "CONTAINER_NAME=blue" >> $GITHUB_ENV
-            echo "CONTAINER_PORT=8080:8080" >> $GITHUB_ENV
-          fi
+      
           
 
       - name: Pull and Run Docker Container
