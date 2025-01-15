@@ -90,8 +90,7 @@ jobs:
           script_stop: true
           script: |
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/live_server:latest
-            sudo docker ps --filter "name=blue" --format "{{.ID}}" | xargs -r sudo docker stop || true
-            sudo docker ps -a --filter "name=blue" --format "{{.ID}}" | xargs -r sudo docker rm || true
+            sudo docker ps -a --filter "name=blue" --format "{{.ID}}" | xargs -r sudo docker rm -f || true
             sudo docker run -d \
             --name blue \
             -p 8080:8080 \
