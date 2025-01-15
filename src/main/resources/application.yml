@@ -1,10 +1,12 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]  # .env 파일 import 설정 추가
   profiles:
-    active: blue
+    active: local
     group:
-      local: local, common, secret
-      blue: blue, common, secret
-      green: green, common, secret
+      local: local, common
+      blue: blue, common
+      green: green, common
 server:
   env: blue
 
@@ -51,9 +53,9 @@ spring:
     name: demo
 
   datasource:
-    url: jdbc:mysql://3.38.236.202:3306/spring
-    username: root
-    password: r00t
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
