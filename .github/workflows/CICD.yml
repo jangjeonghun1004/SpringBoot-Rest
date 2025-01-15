@@ -90,8 +90,8 @@ jobs:
           script: |
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/live_server:latest
             sudo docker run -d \
-            --name "$CONTAINER_NAME" \
-            -p "$CONTAINER_PORT" \
+            --name "${CONTAINER_NAME}" \
+            -p "${CONTAINER_PORT}" \
             -e PROFILES=blue \
             -e ENV=blue \
             -e DB_URL=${{ secrets.DB_URL }} \
