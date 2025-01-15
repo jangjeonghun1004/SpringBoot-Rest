@@ -47,7 +47,7 @@ jobs:
     steps:
       - name: Set target IP
         run: |
-          STATUS=201
+          STATUS=$(curl -o /dev/null -w "%{http_code}" "https://newallsoft.shop")
           echo $STATUS
           if [ $STATUS = 200 ]; then
             CURRENT_UPSTREAM=$(curl -s "http://${{ secrets.LIVE_SERVER_IP }}/env")
@@ -64,7 +64,18 @@ jobs:
             echo "STOPPED_PORT=8080" >> $GITHUB_ENV
             echo "TARGET_UPSTREAM=blue" >> $GITHUB_ENV
           fi
+      
 
+      - name: Check if container is running
+        id: check_container
+        run: |
+          CONTAINER_NAME="blue"
+          RUNNING=$(sudo docker ps --filter "name=/${CONTAINER_NAME}" --format "{{.Names}}")
+          if [ "$RUNNING" == "$CONTAINER_NAME" ]; then
+            echo "CONTAINER_NAME=red" >> $GITHUB_ENV
+          else
+            echo "CONTAINER_NAME=blue" >> $GITHUB_ENV
+          fi
 
       - name: Pull and Run Docker Container
         uses: appleboy/ssh-action@master
@@ -76,7 +87,7 @@ jobs:
           script: |
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/live_server:latest
             sudo docker run -d \
-            --name blue \
+            --name ${CONTAINER_NAME} \
             -p 8080:8080 \
             -e PROFILES=blue \
             -e ENV=blue \
