@@ -63,12 +63,12 @@ jobs:
               CONTAINER_NAME="green"
               STOP_CONTAINER="blue"
               PORT="8081:8081"
-              PROFILE="green"
+              PROFILE="deploy"
             else
               CONTAINER_NAME="blue"
               STOP_CONTAINER="green"
               PORT="8080:8080"
-              PROFILE="blue"
+              PROFILE="deploy"
             fi
 
             # Start new container
@@ -76,7 +76,6 @@ jobs:
               --name $CONTAINER_NAME \
               -p $PORT \
               -e PROFILES=$PROFILE \
-              -e ENV=$PROFILE \
               -e DB_URL=${{ secrets.DB_URL }} \
               -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
