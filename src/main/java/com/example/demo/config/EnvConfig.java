@@ -1,8 +1,7 @@
 package com.example.demo.config;
-
 import io.github.cdimascio.dotenv.Dotenv;
-import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Configuration;
+import jakarta.annotation.PostConstruct;
 
 @Configuration
 public class EnvConfig {
