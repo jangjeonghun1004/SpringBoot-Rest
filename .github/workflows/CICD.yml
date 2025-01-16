@@ -60,15 +60,15 @@ jobs:
 
             RUNNING=$(sudo docker ps --filter "name=blue" --format "{{.Names}}")
             if [ "$RUNNING" = "blue" ]; then
-              CONTAINER_NAME="green"
               STOP_CONTAINER="blue"
+              CONTAINER_NAME="red"
               PORT="8081:8081"
-              PROFILE="deploy"
+              PROFILE="deploy_red"
             else
+              STOP_CONTAINER="red"
               CONTAINER_NAME="blue"
-              STOP_CONTAINER="green"
               PORT="8080:8080"
-              PROFILE="deploy"
+              PROFILE="deploy_blue"
             fi
 
             # Start new container

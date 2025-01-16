@@ -4,12 +4,11 @@ spring:
   config:
     import: optional:file:.env[.properties]
   profiles:
-    active: local
+    active: deploy_red
     group:
       local: local, db
-      deploy: deploy, db
-server:
-  port: 8080
+      deploy_blue: deploy_blue, db
+      deploy_red: deploy_red, db
 
 ---
 
@@ -19,15 +18,27 @@ spring:
       on-profile: local
 server:
   serverName: local_server
+  port: 8080
 
 ---
 
 spring:
   config:
     activate:
-      on-profile: deploy
+      on-profile: deploy_blue
 server:
-  serverName: deploy_server
+  serverName: deploy_blue_server
+  port: 8080
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: deploy_red
+server:
+  serverName: deploy_red_server
+  port: 8081
 
 ---
 
