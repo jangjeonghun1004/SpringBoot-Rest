@@ -2,7 +2,7 @@ spring:
   application:
     name: demo
   config:
-    import: optional:file:.env[.properties]  # .env 파일 import 설정 추가
+    import: optional:file:.env[.properties]
   profiles:
     active: local
     group:
